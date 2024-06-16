@@ -1,5 +1,5 @@
 class kvm {
-  package { ['qemu-kvm', 'libvirt-daemon-system', 'libvirt-clients', 'bridge-utils', 'virt-manager']:
+  package { ['qemu-kvm', 'libvirt', 'libvirt-client', 'bridge-utils', 'virt-install']:
     ensure => installed,
   }
 
