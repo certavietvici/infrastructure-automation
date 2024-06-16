@@ -1,19 +1,18 @@
 ---
-- name: Setup KVM on Ubuntu
+- name: Setup KVM on Rocky Linux
   hosts: all
   become: yes
   tasks:
     - name: Install necessary packages
-      apt:
+      yum:
         name: "{{ item }}"
         state: present
-        update_cache: yes
       loop:
         - qemu-kvm
-        - libvirt-daemon-system
-        - libvirt-clients
+        - libvirt
+        - libvirt-client
         - bridge-utils
-        - virt-manager
+        - virt-install
 
     - name: Start and enable libvirtd service
       systemd:
