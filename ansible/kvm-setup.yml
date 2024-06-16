@@ -1,0 +1,28 @@
+---
+- name: Setup KVM on Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install necessary packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - qemu-kvm
+        - libvirt-daemon-system
+        - libvirt-clients
+        - bridge-utils
+        - virt-manager
+
+    - name: Start and enable libvirtd service
+      systemd:
+        name: libvirtd
+        enabled: yes
+        state: started
+
+    - name: Add user to kvm and libvirt groups
+      user:
+        name: "{{ ansible_user }}"
+        groups: "kvm,libvirt"
+        append: yes
