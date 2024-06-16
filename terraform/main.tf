@@ -2,15 +2,15 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-resource "libvirt_volume" "ubuntu-qcow2" {
-  name = "ubuntu-qcow2"
-  pool = "default"
-  source = "http://cloud-images.ubuntu.com/releases/20.04/release/ubuntu-20.04-server-cloudimg-amd64.img"
+resource "libvirt_volume" "rocky-linux-qcow2" {
+  name   = "rocky-linux-qcow2"
+  pool   = "default"
+  source = "https://download.rockylinux.org/pub/rocky/8/isos/x86_64/Rocky-8.4-x86_64-minimal.iso"
   format = "qcow2"
 }
 
-resource "libvirt_domain" "ubuntu" {
-  name   = "ubuntu"
+resource "libvirt_domain" "rocky-linux" {
+  name   = "rocky-linux"
   memory = "1024"
   vcpu   = 1
 
@@ -18,11 +18,11 @@ resource "libvirt_domain" "ubuntu" {
 
   network_interface {
     network_name = "default"
-    mac = "52:54:00:89:ad:57"
+    mac          = "52:54:00:89:ad:57"
   }
 
   disk {
-    volume_id = libvirt_volume.ubuntu-qcow2.id
+    volume_id = libvirt_volume.rocky-linux-qcow2.id
   }
 
   console {
